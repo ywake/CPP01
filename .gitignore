@@ -13,6 +13,6 @@
 
 
 # tests
-destructor.c
+destructor.cpp
 !auto_test.sh
 .google_test
