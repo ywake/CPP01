@@ -8,7 +8,6 @@ uniq = $(if $1,$(firstword $1) $(call uniq,$(filter-out $(firstword $1),$1)))
 # Variables #
 #############
 
-# TODO: fill in here
 NAME	:= a.out
 SRCS	:= main.cpp Zombie.cpp ZombieHorde.cpp
 TEST_CPP:=

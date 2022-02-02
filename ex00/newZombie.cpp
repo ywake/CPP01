@@ -6,13 +6,15 @@
 /*   By: ywake <ywake@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 10:35:01 by ywake             #+#    #+#             */
-/*   Updated: 2022/02/02 13:53:50 by ywake            ###   ########.fr       */
+/*   Updated: 2022/02/02 15:18:15 by ywake            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Zombie.hpp"
 
 #include <string>
+#include <cstdlib>
+#include <cstdio>
 
 Zombie* newZombie( std::string name )
 {

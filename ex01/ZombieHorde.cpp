@@ -6,11 +6,14 @@
 /*   By: ywake <ywake@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 14:02:26 by ywake             #+#    #+#             */
-/*   Updated: 2022/02/02 15:00:28 by ywake            ###   ########.fr       */
+/*   Updated: 2022/02/02 15:32:12 by ywake            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string>
+#include <sstream>
+#include <cstdlib>
+#include <cstdio>
 
 #include "Zombie.hpp"
 
@@ -27,7 +30,12 @@ Zombie* zombieHorde( int N, std::string name )
   }
 
   for (int i = 0; i < N; i++) {
-    horde[i].setName(name + std::to_string(i));
+    std::stringstream ss;
+    std::string arg;
+
+    ss << name << i;
+    ss >> arg;
+    horde[i].setName(arg);
   }
 
   return horde;
