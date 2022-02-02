@@ -8,10 +8,8 @@ uniq = $(if $1,$(firstword $1) $(call uniq,$(filter-out $(firstword $1),$1)))
 # Variables #
 #############
 
-# TODO: fill in here
-NAME	:= program_name
-SRCS	:=
-TEST_CPP:=
+NAME	:= a.out
+SRCS	:= main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
 
 CXX		:= c++
 CXXFLAGS:= -g -Wall -Werror -Wextra -std=c++98 -pedantic
@@ -24,7 +22,7 @@ OBJS	:= $(addprefix $(OBJDIR), $(SRCS:%.cpp=%.o))
 
 DEPS	:= $(addprefix $(OBJDIR), $(SRCS:%.cpp=%.d))
 
-DSTRCTR	:= ./destructor.c
+DSTRCTR	:= ./destructor.cpp
 
 #################
 # General rules #
@@ -73,10 +71,10 @@ $(DSTRCTR):
 	curl https://gist.githubusercontent.com/ywake/793a72da8cdae02f093c02fc4d5dc874/raw/destructor.c > $(DSTRCTR)
 
 sani: $(OBJDIRS) $(OBJS)
-	$(CC) $(CFLAGS) -fsanitize=address $(OBJS) -o $(NAME) $(LIBS)
+	$(CXX) $(CXXFLAGS) -fsanitize=address $(OBJS) -o $(NAME) $(LIBS)
 
 Darwin_leak: $(DSTRCTR) $(OBJDIRS) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(DSTRCTR) -o $(NAME) $(LIBS)
+	$(CXX) $(CXXFLAGS) $(OBJS) $(DSTRCTR) -o $(NAME) $(LIBS)
 
 Linux_leak: sani
 
@@ -86,37 +84,8 @@ leak: $(shell uname)_leak
 # Test rules #
 ##############
 
-gTestFlag	:= -std=c++11 -DDEBUG -g -fsanitize=integer -fsanitize=address -Wno-writable-strings
-gTestDir	:= ./.google_test
-gVersion	:= release-1.11.0
-gTestVer	:= googletest-$(gVersion)
-gTest		:= $(gTestDir)/gtest $(gTestDir)/$(gTestVer)
-
-TEST_SRCS	:= $(filter-out main.cpp, $(SRCS))
-TEST_OBJS	:= $(addprefix $(OBJDIR), $(TEST_SRCS:%.cpp=%.o))
-
-$(gTest):
-	mkdir -p $(gTestDir)
-	curl -OL https://github.com/google/googletest/archive/refs/tags/$(gVersion).tar.gz
-	tar -xvzf $(gVersion).tar.gz $(gTestVer)
-	$(RM) $(gVersion).tar.gz
-	python $(gTestVer)/googletest/scripts/fuse_gtest_files.py $(gTestDir)
-	mv $(gTestVer) $(gTestDir)
-
-tester: $(gTest) $(OBJDIRS) $(TEST_OBJS)
-	$(CXX) $(gTestFlag) \
-		$(TEST_OBJS) $(TEST_CPP) \
-		$(gTestDir)/$(gTestVer)/googletest/src/gtest_main.cc \
-		$(gTestDir)/gtest/gtest-all.cc \
-		-I$(gTestDir) $(INCLUDE) $(LIBS) -lpthread -o tester
-
-test: tester
-	./tester
-
-test_fclean: FORCE
-	$(RM) -r tester tester.dSYM
-
-test_re: test_fclean test
+test: leak
+	./$(NAME) "Michael" "Joseph"
 
 ##########
 # Colors #
