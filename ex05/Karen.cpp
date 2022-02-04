@@ -6,7 +6,7 @@
 /*   By: ywake <ywake@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 12:33:40 by ywake             #+#    #+#             */
-/*   Updated: 2022/02/04 13:26:35 by ywake            ###   ########.fr       */
+/*   Updated: 2022/02/04 16:59:37 by ywake            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void Karen::error( void )
 void Karen::complain( std::string level )
 {
   std::string names[] = {
-    "debug", "info", "warning", "error"
+    "DEBUG", "INFO", "WARNING", "ERROR"
   };
   void (Karen::*funcs[])(void) = {
     &Karen::debug, &Karen::info, &Karen::warning, &Karen::error

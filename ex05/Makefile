@@ -89,8 +89,8 @@ S1=I have a dream
 S2=I HAVE A DREAM
 
 test: $(NAME)
-	printf "[ERROR]\n[WARNING]\n[DEBUG]\n[INFO]\n" > expect
-	./$(NAME) error warning debug info INFO OTHER "" | awk '$$0=$$1' > out
+	@printf "[ERROR]\n[WARNING]\n[DEBUG]\n[INFO]\n" > expect
+	./$(NAME) ERROR WARNING DEBUG INFO info OTHER "" | awk '$$0=$$1' > out
 	diff -y expect out
 
 ##########
