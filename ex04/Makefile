@@ -91,7 +91,7 @@ S2=I HAVE A DREAM
 test: $(NAME)
 	./$(NAME) test "$(S1)" "$(S2)"
 	cat test | sed 's/$(S1)/$(S2)/g' > expect
-	diff expect test.replace
+	diff -y expect test.replace
 
 ##########
 # Colors #
